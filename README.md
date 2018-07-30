@@ -11,66 +11,87 @@ Start the project:
 http://localhost:3000/   --Would you rather App main page
 http://localhost:3000/add -- Create new question page
 http://localhost:3000/leaderBoard -- Show the points of each user.
+http://localhost:3000/question/:id -- Show the vote form or the result of question of certain id.
 
 ## Main Function
  1 Main page:
-    1) The main page shows 3 shelves for books
- 2 Search
-    1) The search page has a search input field.
-    2) The search page behaves:
-      a) As the user types into the search field, books that match the query are displayed on the page.
-      b) Search results are not shown when all of the text is deleted out of the search input box.
-      c) Invalid queries are handled and prior search results are not shown.
-      d) The search works correctly when a book does not have a thumbnail or an author. (To test this, try searching for "poetry" and "biography").
-      e) The user is able to search for multiple words, such as “artificial intelligence.”
-3 Routing
-  1) The main page contains a link to the search page. When the link is clicked, the search page is displayed and the URL in the browser’s address bar is /search.
-  2) The search page contains a link to the main page. When the link is clicked, the main page is displayed and the URL in the browser’s address bar is /.
+    1) Once the user logs in, the user should be able to toggle between his/her answered and unanswered polls on the home page.
+    2)The polls in both categories are arranged from the most recently created (top) to the least recently created (bottom)
+    3)The unanswered questions should be shown by default
+    4)The name of the logged in user should be visible on the page
+ 2 Add New Question
+    1) This page should have a form for creating two options.
+    2) Upon submitting the form, a new poll should be created, the user should be taken to the home page, and the new polling question should appear in the correct category on the home page.
+ 3 Question Page
+  1) For unanswered polls,the following is shown:
+      a. Text “Would You Rather”;
+      b. Avatar of the user who posted the polling question; and
+      c. Two options.
+  2) For answered polls, , each of the two options contains the following:
+      a.  Text of the option;
+      b.  Number of people who voted for that option; and
+      c.  Percentage of people who voted for that option.
+ 4 Leader Board
+  1)Each entry on the leaderboard should contain the following:
+     a. User’s name;
+     b. User’s picture;
+     c. Number of questions the user asked; and
+     d. Number of questions the user answered
+  2) Users should be ordered in descending order based on the sum of the number of questions they’ve asked and the number of questions they’ve answered
 ## Backend Server
 
-To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
+ The provided file [`api.js`](src/util/api.js) contains the methods you will need to perform necessary operations on the backend:
 
-* [`getAll`](#getall)
-* [`update`](#update)
-* [`search`](#search)
+* [`getQuestions`](#getQuestions)
+* [`getUsers`](#getUsers)
+* [`saveQuestion`](#saveQuestion)
+* [`saveQuestionAnswer`](#saveQuestionAnswer)
 
-### `getAll`
-
-Method Signature:
-
-```js
-getAll()
-```
-
-* Returns a Promise which resolves to a JSON object containing a collection of book objects.
-* This collection represents the books currently in the bookshelves in your app.
-
-### `update`
+### `getQuestions`
 
 Method Signature:
 
 ```js
-update(book, shelf)
+getQuestions()
 ```
 
-* book: `<Object>` containing at minimum an `id` attribute
-* shelf: `<String>` contains one of ["wantToRead", "currentlyReading", "read"]  
-* Returns a Promise which resolves to a JSON object containing the response data of the POST request
+* Returns a Promise which resolves to a JSON object containing a collection of Question objects.
+* This collection represents all the questions currently created in the app.
 
-### `search`
+### `getUsers`
 
 Method Signature:
 
 ```js
-search(query)
+getUsers()
 ```
 
-* query: `<String>`
-* Returns a Promise which resolves to a JSON object containing a collection of a maximum of 20 book objects.
-* These books do not know which shelf they are on. They are raw results only. You'll need to make sure that books have the correct state while on the search page.
+* Returns a Promise which resolves to a JSON object containing a collection of user objects.
+* This collection represents all the users currently created in the app.
+### `saveQuestion`
 
-## Important
-The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
+Method Signature:
+
+```js
+saveQuestion(question)
+```
+
+* question: `<Object>`
+* Returns a Promise which resolves to a JSON object containing two collections of question and user objects.
+* Both users and questions list should be updated.
+
+### `saveQuestionAnswer`
+
+Method Signature:
+
+```js
+saveQuestionAnswer(answer)
+```
+
+* answer: `<Object>`
+* Returns a Promise which resolves to a JSON object containing two collections of question and user objects.
+* Both users and questions list should be updated.
+
 
 ## Create React App
 
@@ -78,6 +99,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Contributing
 
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
+The original _DATA.js is created by udacity. Other files are created by Lei He.
+Images and icons are from internet.
 
 For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
