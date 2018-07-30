@@ -24,7 +24,7 @@ export class NavBar extends Component {
             activeClassName='active'
           >Home</NavLink>
           <NavLink
-            to = '/new'
+            to = '/add'
             activeClassName='active'
            > New Question</NavLink>
           <NavLink

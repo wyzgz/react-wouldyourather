@@ -34,7 +34,7 @@ import ErrorPage from './ErrorPage'
                 : (
                   <div>
                     <Route path='/' exact component = {QuestionsPanel} />
-                    <Route path = '/new' component = {NewQuestion} />
+                    <Route path = '/add' component = {NewQuestion} />
                     <Route path = '/leaderBoard' component = {LeaderBoard} />
                     <Route path='/question/:id'  component={Question} />
                     <Route path = '/error' component={ErrorPage} />
