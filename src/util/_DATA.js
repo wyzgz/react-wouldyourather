@@ -2,10 +2,10 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    avatarURL: ,
+    avatarURL: 'https://tylermcginnis.com/would-you-rather/sarah.jpg',
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
-      "6ni6ok3ym7mf1p33lnez": 'optionOne',
+      "6ni6ok3ym7mf1p33lnez": 'optionTwo',
       "am8ehyc8byjqgar0jgpub9": 'optionTwo',
       "loxhs1bqm25b708cmbf3g": 'optionTwo'
     },
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: 'tylermcginnis',
     name: 'Tyler McGinnis',
-    avatarURL: ,
+    avatarURL: 'https://tylermcginnis.com/would-you-rather/tyler.jpg',
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
-    avatarURL: ,
+    avatarURL: 'https://tylermcginnis.com/would-you-rather/dan.jpg',
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -157,7 +157,7 @@ export function _saveQuestion (question) {
         ...questions,
         [formattedQuestion.id]: formattedQuestion
       }
-      
+
       users = {
         ...users,
         [authedUser]: {
@@ -166,7 +166,8 @@ export function _saveQuestion (question) {
         }
       }
 
-      res(formattedQuestion)
+      //res(formattedQuestion)
+      res(questions,users)
     }, 1000)
   })
 }
@@ -195,8 +196,7 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           }
         }
       }
-
-      res()
-    }, 500)
+      res({users,questions})
+    }, 50)
   })
 }
