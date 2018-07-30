@@ -8,8 +8,8 @@ Start the project:
 * start the development server with `npm start`
 
 ## URL
-http://localhost:3000/   --Would you rather App main page
-http://localhost:3000/add -- Create new question page
+http://localhost:3000/   --Would you rather App main page.
+http://localhost:3000/add -- Create new question page.
 http://localhost:3000/leaderBoard -- Show the points of each user.
 http://localhost:3000/question/:id -- Show the vote form or the result of question of certain id.
 
