@@ -1,4 +1,4 @@
-import {RECEIVE_USERS, SAVE_USER_ANSWER} from '../actions/users'
+import {RECEIVE_USERS, SAVE_USER_ANSWER} from '../actions/actionTypes'
 
 
 export default function users(state = {},action){

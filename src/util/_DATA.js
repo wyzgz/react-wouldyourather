@@ -167,7 +167,7 @@ export function _saveQuestion (question) {
       }
 
       //res(formattedQuestion)
-      res(questions,users)
+      res({questions,users})
     }, 1000)
   })
 }

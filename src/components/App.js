@@ -1,7 +1,7 @@
-import React, { Component,Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import {handleInitialUsers} from '../actions/shared'
-import { BrowserRouter as Router, Route,Redirect} from 'react-router-dom'
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 import LoadingBar from 'react-redux-loading'
 import LogInPage from './LogInPage'
 import QuestionsPanel from './QuestionsPanel'
@@ -12,16 +12,16 @@ import NavBar from './NavBar'
 import ErrorPage from './ErrorPage'
 
 /**
- * ComponentName
+ * App
  */
  class App extends Component {
 
  componentDidMount(){
-   this.props.dispatch(handleInitialUsers())
+   this.props.getData()
  }
 
   render() {
-      const {isLoggedIn,loading} = this.props
+      const {isLoggedIn,loading,users} = this.props
       if(isLoggedIn){
         return(
           <Router>
@@ -29,39 +29,46 @@ import ErrorPage from './ErrorPage'
               <NavBar/>
               <LoadingBar/>
               {
-                loading
-                ? null
-                : (
-                  <div>
-                    <Route path='/' exact component = {QuestionsPanel} />
-                    <Route path = '/add' component = {NewQuestion} />
-                    <Route path = '/leaderBoard' component = {LeaderBoard} />
-                    <Route path='/question/:id'  component={Question} />
-                    <Route path = '/error' component={ErrorPage} />
-                  </div>
-                  )
+                loading? null: <LoggedIn users = {users} />
               }
             </div>
           </Router>
         )
-      }else{
-        return(
-            <div className = 'container'>
-              <LogInPage />
-            </div>
-        )
       }
+      return(
+          <div className = 'container'>
+            <LogInPage />
+          </div>
+      )
+
 
   }
 }
 
+const LoggedIn = users => (
+    <div>
+      <Route path='/' exact component = {QuestionsPanel} />
+      <Route path = '/add' component = {NewQuestion} />
+      <Route path='/question/:id'  component={Question} />
+      <Route path = '/error' component={ErrorPage} />
+      <Route path = '/leaderBoard' render={(props)=><LeaderBoard {...props} users = {users}/>} />
+    </div>
+
+)
+
+const  mapDispatchToProps = dispatch =>{
+  return {
+    getData: ()=>dispatch(handleInitialUsers())
+  }
+}
 
 function mapStateToProps({loggedInUser,users,questions},{match}){
   return {
+    users,
     isLoggedIn: loggedInUser !== null,
     loading: questions === null,
     ...match
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);

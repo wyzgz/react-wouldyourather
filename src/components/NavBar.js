@@ -50,7 +50,7 @@ export class NavBar extends Component {
     );
   }
 }
-function mapStateToProps({users,loggedInUser,path},ownProps){
+function mapStateToProps({users,loggedInUser},ownProps){
   const user = users[loggedInUser]
   return {
     user

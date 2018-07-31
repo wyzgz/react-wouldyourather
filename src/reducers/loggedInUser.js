@@ -1,4 +1,4 @@
-import {SET_LOGGEDIN_USER, USER_LOG_OUT} from '../actions/loggedInUser'
+import {SET_LOGGEDIN_USER, USER_LOG_OUT} from '../actions/actionTypes'
 
 
 export default function loggedInUser (state = null,action){

@@ -12,13 +12,8 @@ import { Link} from 'react-router-dom'
    }
    handleClick = (e) =>{
      e.preventDefault()
-     const tab = e.target.value
-     tab === 'a'
-     ? this.setState(() => ({
-       showDefault:false,
-     }))
-     : this.setState(() => ({
-       showDefault:true,
+     this.setState(prevState => ({
+       showDefault:!prevState.showDefault,
      }))
    }
 
@@ -50,6 +45,20 @@ import { Link} from 'react-router-dom'
      )
    }
 }
+
+function QuestionList({list}){
+  return (
+    <ul>
+    {list.map((question)=>(
+      <li key = {question.id}>
+        <Summary question = {question}/>
+      </li>
+    ))}
+    </ul>
+  )
+}
+
+
 function Summary({question}){
   const {id,author,optionOne} = question
   return(
@@ -75,17 +84,6 @@ function Summary({question}){
       </div>
 
     </Link>
-  )
-}
-function QuestionList({list}){
-  return (
-    <ul>
-    {list.map((question)=>(
-      <li key = {question.id}>
-        <Summary question = {question}/>
-      </li>
-    ))}
-    </ul>
   )
 }
 
@@ -116,10 +114,9 @@ function mapStateToProps({users,questions,loggedInUser}){
     }
     return question
   })
-
   return {
-    aList,
-    uList,
+    aList: aList.sort((a,b)=>b.timestamp - a.timestamp),
+    uList: uList.sort((a,b)=>b.timestamp - a.timestamp)
   }
 }
 

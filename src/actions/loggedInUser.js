@@ -1,5 +1,4 @@
-export const SET_LOGGEDIN_USER = 'SET_LOGGEDIN_USER'
-export const USER_LOG_OUT = 'USER_LOG_OUT'
+import {SET_LOGGEDIN_USER, USER_LOG_OUT} from './actionTypes'
 
 export function setLoggedInUser(id){
   return {

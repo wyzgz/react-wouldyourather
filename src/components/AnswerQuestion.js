@@ -14,69 +14,95 @@ export class AnswerQuestion extends Component {
   }
   handleToggle = (e) => {
     const option = e.target.value
-    this.setState (()=>({option}))
+    this.setState ({option})
   }
   handleSubmit = (e) =>{
     e.preventDefault()
     const {id} = this.props
-    this.props.dispatch(handleSaveAnswer({
+    this.props.saveAnswer({
       id,
       answer: this.state.option === 'A'? 'optionOne':'optionTwo'
-    }))
+    })
   }
 
   render() {
     const {question,author} = this.props
     const {option} = this.state
+    const param = {
+      question,
+      author,
+      option,
+      handleChange: this.handleChange,
+      handleToggle: this.handleToggle,
+      handleSubmit: this.handleSubmit
+    }
     return (
-      <div className='queContainer'>
-        <div className='topAuthor'>{author.name} asks: </div>
-        <div className='bottomBox'>
-          <div className='leftAva'>
-            <img
-              src={author.avatarURL}
-              className='avatar100'
-              alt={author.name}
-            />
-          </div>
-          <div className='rightAnswer'>
-            <div className='intro3'>Would You Rather...</div>
-            <div className = 'answerForm'>
-              <form>
-                <div>
-                  <input
-                    type ='radio'
-                     onClick = {this.handleToggle}
-                     checked = {option === 'A'}
-                     value = 'A'
-                     onChange={this.handleChange}
-                     />
-                    <span>{question.optionOne.text}</span>
-                </div>
-                <div>
-                  <input
-                    type ='radio'
-                    checked = {option === 'B'}
-                    value = 'B'
-                    onClick = {this.handleToggle}
-                    onChange = {this.handleChange}
-                    />
-                    <span>{question.optionTwo.text}</span>
-                </div>
-                <div>
-                <button
-                  onClick = {this.handleSubmit}
-                  className='answerbtn'
-                  >Submit</button></div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <AnswerQuestionForm param={param}/>
     );
   }
 }
+function AnswerQuestionForm({param}){
+  const {
+    question,
+    author,
+    option,
+    handleChange,
+    handleToggle,
+    handleSubmit
+  } = param
+  const {name,avatarURL} = author
+  const {optionOne,optionTwo} = question
+
+  return(
+    <div className='queContainer'>
+      <div className='topAuthor'>{name} asks: </div>
+      <div className='bottomBox'>
+        <div className='leftAva'>
+          <img
+            src={avatarURL}
+            className='avatar100'
+            alt={name}
+          />
+        </div>
+        <div className='rightAnswer'>
+          <div className='intro3'>Would You Rather...</div>
+          <div className = 'answerForm'>
+            <form>
+              <div>
+                <input
+                  type ='radio'
+                   onClick = {handleToggle}
+                   checked = {option === 'A'}
+                   value = 'A'
+                   onChange={handleChange}
+                   />
+                  <span>{optionOne.text}</span>
+              </div>
+              <div>
+                <input
+                  type ='radio'
+                  checked = {option === 'B'}
+                  value = 'B'
+                  onClick = {handleToggle}
+                  onChange = {handleChange}
+                  />
+                  <span>{optionTwo.text}</span>
+              </div>
+              <div>
+                <button
+                  onClick = {handleSubmit}
+                  className='answerbtn'
+                  >Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 function mapStateToProps({questions},{id,author}){
   const question = questions[id]
@@ -87,4 +113,10 @@ function mapStateToProps({questions},{id,author}){
   }
 }
 
-export default connect(mapStateToProps)(AnswerQuestion);
+const mapDispatchToProps = dispatch => {
+  return {
+    saveAnswer: answer => dispatch(handleSaveAnswer(answer))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AnswerQuestion);

@@ -7,6 +7,15 @@ Start the project:
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
+#necessary libraries:
+react-Redux
+react-router-dom
+react-router
+react-redux-loading
+redux-thunk
+react-modal
+
+
 ## URL
 http://localhost:3000/   --Would you rather App main page.
 http://localhost:3000/add -- Create new question page.
@@ -38,6 +47,13 @@ http://localhost:3000/question/:id -- Show the vote form or the result of questi
      c. Number of questions the user asked; and
      d. Number of questions the user answered
   2) Users should be ordered in descending order based on the sum of the number of questions they’ve asked and the number of questions they’ve answered
+  5 Nav Bar
+    1) Show three links : Home, New Question, leaderBoard.
+    2) Show the current login user information.
+    3) Show Log out option. When user click Log out, return to login page.
+  6 Log In
+    1) Show login form when no user is in the state.
+    2) User could select one user from user list to login.
 ## Backend Server
 
  The provided file [`api.js`](src/util/api.js) contains the methods you will need to perform necessary operations on the backend:

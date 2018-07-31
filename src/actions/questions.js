@@ -1,9 +1,7 @@
 import {saveQuestion} from '../util/api'
 import { receiveUsers } from './users'
+import {RECEIVE_QUESTIONS,UPDATE_QUESTIONS,SAVE_QUESTION} from './actionTypes'
 
-export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
-export const SAVE_QUESTION = 'SAVE_QUESTION'
-export const UPDATE_QUESTIONS = 'UPDATE_QUESTIONS'
 export function receiveQuestions(questions){
   return{
     type: RECEIVE_QUESTIONS,
@@ -28,7 +26,7 @@ export function handleSaveQuestion(question){
     const {loggedInUser} = getState()
     question.author = loggedInUser
     return saveQuestion(question)
-            .then((questions,users) => {
+            .then(({questions,users}) => {
               dispatch(receiveQuestions(questions))
               dispatch(receiveUsers(users))
             })
